@@ -7,7 +7,7 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 export function Preview() {
   
-  const model = useModel(require("./utils/shoe/shoe.gltf"))!;
+  const model = useModel(require("./shoe.gltf"))!;
   const { ref, context } = useGPUContext();
 
   useEffect(() => {
