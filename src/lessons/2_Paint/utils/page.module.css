@@ -1,0 +1,39 @@
+.container {
+  background-color: white;
+}
+.toolBar {
+  display: flex;
+  height: 50px;
+  background-color: #f0f0f0;
+  font-family: Arial, Helvetica, sans-serif
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 20px;
+  border: 1px solid #333;
+  min-width: 120px;
+  user-select: none;
+}
+.color {
+  width: 50px;
+  border-top: 5px solid #8d8d8d;
+  border-left: 5px solid #8d8d8d;
+  border-right: 5px solid #cccccc;
+  border-bottom: 5px solid #cccccc;
+  cursor: pointer;
+}
+.active {
+  background-color: #cccccc;
+  font-weight: bold;
+}
+.item:active {
+  background-color: #cccccc;
+  font-weight: bold;
+}
+.canvas {
+  width: 100wh;
+  height: calc(100vh - 55px);
+}
