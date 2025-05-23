@@ -7,7 +7,7 @@ export function init() {
   const height = window.innerHeight;
   const canvas = document.getElementById('gpu-canvas') as HTMLCanvasElement;
   const loader = new GLTFLoader();
-  loader.load("assets/shoe/shoe.gltf", (model) => {
+  loader.load("./shoe.gltf", (model) => {
     display(model.scene, canvas, width, height);
   });
 }
