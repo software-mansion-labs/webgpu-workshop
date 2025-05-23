@@ -4,7 +4,7 @@
 
 ```
 git clone git@github.com:software-mansion-labs/webgpu-workshop.git
-cd WebGPU_workshop
+cd webgpu-workshop
 npm i --force
 cd ios && pod install && cd ..
 ```
