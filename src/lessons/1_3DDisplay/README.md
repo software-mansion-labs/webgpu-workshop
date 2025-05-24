@@ -9,7 +9,7 @@ Task: Create a 3D preview of different models using three.js and react-native-wg
 Task: Use `steps/web/boilerplate_cube.ts` file as a starting point. Setup three.js renderer, scene, camera and light. Add a cube and a torus to the scene and animate them.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/67641d57-e338-45c7-8488-1668f6e1c58e" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/7b802d09-df96-4ad6-b271-9c89af6845f9" height="400" controls></video>
 
 1.1 Setup a renderer.  
 📁 `display.ts`
@@ -114,7 +114,8 @@ Checkpoint: 📁 `steps/web/display_cube.ts`
 Task: Use `steps/web/boilerplate_monkey.ts` file as a starting point. The scene and light is already set up. You need to load a monkey model and add it to the scene. The model is in the `utils/model` folder. You can use the `BufferGeometryLoader` to load the model.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/eb5862b5-b22f-420d-9dbe-973ad3b547de" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/b2fe14de-76f0-4720-9c14-9d32cdba37cc
+" height="400" controls></video>
 
 2.1 Load monkey model.  
 📁 `display.ts`
@@ -155,7 +156,7 @@ Checkpoint: 📁 `steps/web/display_monkey.ts`
 Task: Use `steps/web/boilerplate_shoe.ts` file as a starting point. The scene and light is already set up. You need to load a shoe model and add it to the scene. The model is in the `utils/shoe` folder. You can use the `GLTFLoader` to load the model.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/e56eea5e-a902-4614-9ae9-ada23ed73c99" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/b5d583cc-edc1-4aa2-b50c-1c8c447c8bf2" height="400" controls></video>
 
 3.1 Load a shoe model.  
 📁 `display.ts`
@@ -195,7 +196,7 @@ Checkpoint: 📁 `steps/web/display_cube.ts`
 Task: Use `steps/mobile/boilerplate.tsx` file as a starting point. You need to load a shoe model and add it to the scene. The model is in the `utils/shoe` folder. You can use the `GLTFLoader` to load the model.
 
 Result:
-<video src="https://github.com/user-attachments/assets/a8ae6254-2c45-4e20-9d7b-8fcff07f3c7a" height="500" controls></video>
+<video src="https://github.com/user-attachments/assets/9f4abe1b-db67-4f32-97ec-7ceb010099fc" height="400" controls></video>
 
 4.1 Load a shoe model.  
 📁 `3DPreview.tsx`
@@ -269,7 +270,7 @@ Checkpoint: 📁 `steps/mobile/step1.ts`
 Task: You need to add gesture support to the shoe model. Let's use `react-native-gesture-handler` library to handle gestures. You can use `Gesture.Pan` to handle rotation - [docs](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/pan-gesture/).
 
 Result:
-<video src="https://github.com/user-attachments/assets/329a124c-a6da-4b33-9597-9b215335ec22" height="500" controls></video>
+<video src="https://github.com/user-attachments/assets/44caef7d-a5e7-417e-9fba-6f7ada790877" height="400" controls></video>
 
 5.1 Add gesture handler to the canvas.
 📁 `3DPreview.tsx`

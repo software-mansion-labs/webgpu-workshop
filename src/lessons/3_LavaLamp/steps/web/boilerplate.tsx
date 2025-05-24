@@ -1,7 +1,7 @@
 import tgpu from 'typegpu';
 import * as d from 'typegpu/data';
 import { div, add, mix } from 'typegpu/std';
-import { getWebGPUContext, noise } from './utils/utils';
+import { getWebGPUContext, noise, sharpen } from './utils/utils';
 
 export async function init() {
   const { root, context, presentationFormat, width, height } = await getWebGPUContext();

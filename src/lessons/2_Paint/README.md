@@ -5,7 +5,7 @@
 Task: Make a paint-like application using WebGPU.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/e594db59-5c7f-408d-b348-78ea87c45d42" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/dbc5821f-07a1-41cb-8a6c-df42b43a2f06" height="400" controls></video>
 
 
 ### Setup render pipeline
@@ -13,7 +13,7 @@ Result:
 Task: Use `steps/web/boilerplate.ts` file as a starting point. Setup WebGPU render pipeline according to the following steps.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/a2c0818c-9a07-429c-8b37-25d882e67db2" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/dabc72ff-6c79-46f9-9870-ff269c1bb74b" height="400" controls></video>
 
 1.1 Get access to canva, device and context. Make sure that canva has correct size.  
 📁 `paint.web.ts`
@@ -369,7 +369,7 @@ Checkpoint: 📁 `steps/step1.ts`
 Task: You can see that current brush driaving a circles instead of lines. Implement a line drawing algorithm. You can base your algorithm on [linear interpolation](https://en.wikipedia.org/wiki/Linear_interpolation). Do it in compute shader.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/77c718c7-cfc1-4dcd-b116-03de30a97789" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/7d9cfa2c-5ecc-4786-9e17-8a5af541504d" height="400" controls></video>
 
 3.1 Pass to the compute shader the last position of the cursor too. It require a few steps. Youn need to add a new uniform. Create a JS buffor for data, bind them with compute pipeline and send dat thada to GPU. First let's update a uniform layout. 
 📁 `paint.web.ts`
@@ -477,7 +477,7 @@ Checkpoint: 📁 `steps/step2.ts`
 Task: Implement rainbow and spray brush styles in compute shader.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/8c9bf4a6-2f6a-4594-a33b-670071238e35" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/06656fbf-e307-46b4-b4cc-a68e12af5f45" height="400" controls></video>
 
 4.1 Implement rainbow brush. Compute color based on brush position instead of using solid color from uniform.  
 📁 `paint.web.ts`
@@ -511,7 +511,7 @@ Checkpoint: 📁 `steps/step3.ts`
 Task: Use `steps/mobile/Example.boilerplate.ts` and `steps/mobile/paint.boilerplate.ts` files as a starting point. Add gesture handling and move render loop to UI thread. Note that `steps/mobile/paint.boilerplate.ts` is a copy of final version of `paint.web.ts` file - you'll ned to update it a bit later.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/8656fd2b-b79a-48f5-b714-a764ef5134ef" height="500" controls></video>
+<video src="https://github.com/user-attachments/assets/6300a60f-05b1-4d78-a1d5-3f637ba5f15d" height="400" controls></video>
 
 ### Setup WebGPU for mobile.
 

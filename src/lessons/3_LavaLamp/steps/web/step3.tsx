@@ -25,7 +25,7 @@ export async function init() {
   })((input) => {
     const uv = div(input.pos.xy, d.vec2f(width * 0.4, height * 0.4));
     const time = timeUniform.value;
-    const p = add(uv, div(d.vec2f(time, time), 3000));
+    const p = add(uv, div(d.vec2f(time, time), 5000));
     const n = sharpen(noise(p));
     const color = mix(
       div(d.vec4f(153, 0, 105, 255), 255),
@@ -41,7 +41,7 @@ export async function init() {
     .createPipeline();
 
   function frame() {
-    timeUniform.write(performance.now());
+    timeUniform.write(performance.now() % 15000);
     pipeline
       .withColorAttachment({
         view: context.getCurrentTexture().createView(),
