@@ -1,5 +1,149 @@
 # 3D Preview
 
+<details>
+<summary>Three.js - Theoretical introduction</summary>
+
+### Official Docs
+
+- https://www.w3.org/TR/webgpu/
+- https://www.w3.org/TR/WGSL
+
+### Interesting Materials
+
+- https://github.com/mikbry/awesome-webgpu
+- https://webgpufundamentals.org/
+- https://eliemichel.github.io/LearnWebGPU/index.html
+- https://codelabs.developers.google.com/your-first-webgpu-app#0
+- https://webgpu.github.io/webgpu-samples/
+- https://github.com/mikbry/awesome-webgpu
+- https://www.webgpuexperts.com/blog
+- https://compute.toys/
+
+## Key Concepts
+
+WebGPU is an implementation of a standard; there are a couple of implementations.
+
+- https://github.com/google/dawn
+- https://github.com/gfx-rs/wgpu
+
+### GPU Access
+
+- **Adapter** - Represents a physical GPU device on the system.
+- **Device** - A logical representation of an adapter. It is created from a GPUAdapter and manages resource creation and ownership.
+- **Pipeline** - A collection of shaders for one command of a compute pass.
+- **Command Encoder** - Serializes your GPU job into a list of instructions that you can send from the CPU to the GPU and execute there.
+- **Command Buffer** - A buffer that contains output from the encoder.
+- **Render Pass** - Describes a GPU rendering task and provides information about memory layouts.
+    - Example pipeline:
+        
+        ```jsx
+        encoder = device.createCommandEncoder()
+        
+        pass = encoder.beginRenderPass()
+        pass.setPipeline()
+        pass.setVertexBuffer()
+        pass.setIndexBuffer()
+        pass.setBindGroup()
+        pass.draw()
+        pass.end()
+        
+        commandBuffer = encoder.finish();
+        
+        device.queue.submit([commandBuffer]);
+        
+        ```
+        
+- **device.queue.writeBuffer()** - Used to send some data from RAM to VRAM memory.
+- **device.queue.submit()** - Used to send a job to the GPU scheduler.
+- **Compute Pass** - Describes a GPU compute task and provides information about memory layouts.
+    
+    ```jsx
+    const commandEncoder = device.createCommandEncoder();
+    
+    const pass = commandEncoder.beginComputePass();
+    pass.setPipeline();
+    pass.setBindGroup();
+    pass.dispatchWorkgroups();
+    pass.end();
+    
+    device.queue.submit([commandEncoder.finish()]);
+    
+    ```
+    
+- **Workgroup** - A group of threads that share local memory. This memory is faster than global memory. You can synchronize threads inside the workgroup.
+- **@workgroup_size(x, y, z)** - Describes how many threads are in one workgroup. You can think of it like splitting a 3D cube into smaller cubes.
+- **dispatchWorkgroups()** - Used to execute a certain amount of workgroups. It is important to dispatch the correct amount of workgroups to cover all data you want to process.
+    - You need to fine-tune the dispatch amount and workgroup size. Every dispatch has some overhead, and different GPUs have limitations for workgroup size (threads per workgroup, memory limit, registers per workgroup). If you exceed the limit, your performance will decrease. A good default for workgroup size is 256, 512, or 1024.
+- Indirect Draw - You can delegate the logic to the GPU to decide what and when to draw.
+    
+    ```jsx
+    @group(0) @binding(0) var<storage, read_write> drawArgs : DrawArgs;
+    
+    @compute @workgroup_size(1)
+    fn main() {
+      drawArgs.vertexCount = 3;
+      drawArgs.instanceCount = 10000;
+      drawArgs.firstVertex = 0;
+      drawArgs.firstInstance = 0;
+    }
+    
+    // JS
+    renderPass.drawIndirect(indirectBuffer, 0);
+    
+    ```
+    
+
+### Shaders
+
+- **Vertex Shader** - Transforms vertex information into a position on the screen. It operates over normalized space [-1, 1]. It is useful because you can perform geometric computation without worrying about screen resolution. Vertex shaders usually work with triangles because you can approximate complex 3D objects from them.
+- **Fragment Shader** - Computes color for every pixel based on information received from the Vertex Shader. It is performed on pixels that are inside triangles computed by the vertex shader.
+    - Fragment shaders draw their output to a Color Attachment that provides access to the target texture, which is a “back frame buffer.”
+    - In a fragment shader, 0,0 is the top left corner.
+- **WGSL** - The language of shaders in WebGPU, compiled into native shaders for specific platforms like Metal/DirectX/Vulkan. It is a strongly-typed language.
+    - WGSL syntax - https://webgpufundamentals.org/webgpu/lessons/webgpu-wgsl.html
+    - WGSL Types - https://webgpufundamentals.org/webgpu/lessons/webgpu-memory-layout.html#vec-and-mat-types
+- Built-in values - In shaders, you have access to a set of global variables that you don’t need to define. These variables describe, for example, the global ID of a shader or the x/y of the pixel you are currently working on.
+
+### Memory Layout
+
+Normally, in languages like C++, compilers compute memory layouts based on your code. However, with shaders, memory allocation and shader code are separate. You need to explicitly tell the shader compiler what the memory interpretation is and what the size of structures is.
+
+- **Bind Group Layout** - Describes the type of data under each index of binding data, and how to interpret that memory field.
+- **Bind Group** - Fill the group with references to physical buffers. You can rebuild a bind group without rebuilding the entire pipeline.
+
+### Data Containers
+
+- **Buffer** - A segment of GPU memory used as a basic container for binary data in the GPU pipeline. Buffers are created by the CPU in RAM, and then sent to GPU VRAM. In JS, we use ArrayBuffers and TypedArrays to allocate buffers, fill them with data, and then send them to the GPU. One buffer can contain many sub-buffers with different types.
+    - You can specify the destination of a Buffer by setting flags.
+    - Memory Layout - https://webgpufundamentals.org/webgpu/lessons/webgpu-memory-layout.html
+    - ArrayBuffer - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
+    - TypedArray - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
+    
+    ```jsx
+    const data = new ArrayBuffer(8);
+    const subData1 = new Float32Array(data);
+    const subData2 = new Uint32Array(data);
+    
+    ```
+    
+- **Uniform Buffer** - A buffer optimized to store a small amount of data (usually limited to 64kB).
+- **Storage Buffer** - A general-purpose buffer that can store more data than a uniform buffer; you can read and write to this buffer from shaders.
+- **Texture** - Think of it as an image containing information about pixels and capable of storing many layers.
+- **TextureView** - Since a texture is a complex structure with lots of information, you can define how you want to access parts of it through a TextureView.
+- **Sampler** - Describes the strategy for reading pixel data from a texture, such as blending pixels or clamping. It describes how to read data from a texture.
+- **Vertex Buffer** - A vertex shader-specific data type containing vertex data like position, color, etc.
+- **Index Buffer** - Some vertices are duplicated (on triangle connections). To save memory, you send each vertex once and refer to it by index.
+
+### Others
+
+- **Frame Buffer** - Contains a rasterized texture able to be displayed on the screen.
+- **VSync** - The signal from the GPU that flushes the buffer.
+- **Swap Chain** - A mechanism for swapping texture buffers.
+- **Double Buffering** - The GPU contains at least two buffers: back and front frame buffers. The back frame is for computing, and the front frame is for displaying.
+- **GPU Scheduler** - The GPU driver manages access to GPU hardware and runs tasks from the queue.
+
+</details>
+
 ## Web
 
 Task: Make a paint-like application using WebGPU.

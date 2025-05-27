@@ -2,6 +2,35 @@
 
 Task: Create a 3D preview of different models using three.js and react-native-wgpu.
 
+<details>
+<summary>Three.js - Theoretical introduction</summary>
+
+https://threejs.org/  
+High-level framework for 3D graphics. Visit the docs and play with interactive examples.
+
+Docs
+- https://threejs.org/docs/
+
+Interesting materials
+- https://threejs.org/examples/
+- https://threejs.org/editor/
+- https://discoverthreejs.com/book/
+
+## **Key Concepts**
+
+- Scene - essentially a world. A 3D space where you can place objects and interact with them. It contains all objects, models, lights, cameras, and everything you want to display.
+- Primitives [https://threejs.org/manual/#en/primitives] - basic 3D shapes, like cubes, cylinders, cones, toruses, etc.
+- Camera [https://threejs.org/manual/#en/cameras] - your point of view in the scene. The camera defines what and how you see objects in a scene. The view space of a camera is called a *frustum* (more details in the docs).
+- Light [https://threejs.org/manual/#en/lights] - to see something in a scene via the camera, you need to illuminate objects. You can add many different sources of light to achieve your desired effect.
+- Geometry - the geometrical description of an object. It contains the recipe for constructing the desired object from triangles.
+- Model - a file that contains the description of the geometry of the desired object.
+- Material [https://threejs.org/manual/#en/materials] - a property of an object, describing how the object interacts with light.
+- Texture - the skin of an object. Most often, it is the image that will be applied to the geometry.
+- Mesh - the physical object, a combination of Geometry and Material.
+- Renderer - the backend of Three.js that physically displays something on a screen. Three.js supports two different backends: WebGL and WebGPU.
+
+</details>
+
 ## Web
 
 ### Cube
@@ -302,3 +331,4 @@ Checkpoint: 📁 `steps/mobile/step2.ts`
 ## Links
 - Three.js docs - https://threejs.org/docs/
 - Gesture handler docs - https://docs.swmansion.com/react-native-gesture-handler/docs/
+- Reanimated docs - https://docs.swmansion.com/react-native-reanimated/docs/
