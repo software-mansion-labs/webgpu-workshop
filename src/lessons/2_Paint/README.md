@@ -167,7 +167,7 @@ Task: Use `steps/web/boilerplate.ts` file as a starting point. Setup WebGPU rend
 Result:  
 <video src="https://github.com/user-attachments/assets/dabc72ff-6c79-46f9-9870-ff269c1bb74b" height="400" controls></video>
 
-1.1 Get access to canva, device and context. Make sure that canva has correct size.  
+1.1 Get access to the canvas, device and context. Make sure that the canvas has a correct size.  
 📁 `paint.web.ts`
 ```ts
 const canvas = document.getElementById('gpu-canvas') as HTMLCanvasElement;
@@ -194,7 +194,7 @@ context.configure({
 });
 ```
 
-1.3 Write a vertex shader. We'll draw a two triangles (compined in square) to cover the whole canvas.  
+1.3 Write a vertex shader. We'll draw two triangles (a square sliced along its diagonal) to cover the whole canvas.  
 📁 `paint.web.ts`
 ```ts
 const vertexShaderCode = `
@@ -214,7 +214,7 @@ const vertexShaderCode = `
 `;
 ```
 
-1.4 Write a fragment shader. It'll read a color already computed in compute shader and just display them.  
+1.4 Write a fragment shader. It'll read the color already computed by the compute shader and just display it.  
 📁 `paint.web.ts`
 ```ts
 const fragmentShaderCode = `
@@ -247,7 +247,7 @@ const renderPipeline = device.createRenderPipeline({
 });
 ```
 
-1.6 Create a texture. This texture will be a shared memory between compute and fragment shader.  
+1.6 Create a texture. This texture will be a shared memory between compute and fragment shaders.  
 📁 `paint.web.ts`
 ```ts
 const canvasTexture = device.createTexture({
@@ -302,7 +302,7 @@ function frame() {
   // ...
 ```
 
-1.11 Create a render pass and specify which view needs to be an target output for your render pipeline.  
+1.11 Create a render pass and specify which view needs to be a target output for your render pipeline.  
 📁 `paint.web.ts`
 ```ts
 function frame() {
@@ -328,16 +328,16 @@ function frame() {
   // ...
 ```
 
-1.13 Draw the triangles - 6 points one time.  
+1.13 Draw the triangles (3 vertices per triangle = 6 in total).  
 📁 `paint.web.ts`
 ```ts
 function frame() {
   // ...
-  renderPass.draw(6, 1);
+  renderPass.draw(6);
   // ...
 ```
 
-1.14 Submit task to GPU.  
+1.14 Submit all commands to the GPU.  
 📁 `paint.web.ts`
 ```ts
 function frame() {
@@ -392,7 +392,7 @@ const computeShaderCode = `
 `;
 ```
 
-2.2 Describe memory layout for compute shader.  
+2.2 Describe the memory layout of our compute shader.  
 📁 `paint.web.ts`
 ```ts
 const bindGroupLayout = device.createBindGroupLayout({
@@ -410,7 +410,7 @@ const pipelineLayout = device.createPipelineLayout({
 });
 ```
 
-2.3 Create compute pipeline with memory layout.  
+2.3 Create a compute pipeline with that memory layout.  
 📁 `paint.web.ts`
 ```ts
 const computePipeline = device.createComputePipeline({
@@ -422,7 +422,7 @@ const computePipeline = device.createComputePipeline({
 });
 ```
 
-2.4 Create buffers for uniforms to compute shader. Those buffers will be sent from JS to GPU.  
+2.4 Create buffers for storing *uniform* data, to be accessed by our compute shader. We can use them to send data from JS to the GPU.  
 📁 `paint.web.ts`
 ```ts
 const brushSizeBuffer = device.createBuffer({
@@ -446,7 +446,7 @@ const brushPosBuffer = device.createBuffer({
 });
 ```
 
-2.5 Create bind group for compute pipeline. Bind all buffers and texture with the layout.  
+2.5 Create a bind group for the compute pipeline. Bind all buffers and texture with the layout.  
 📁 `paint.web.ts`
 ```ts
 const computeBindGroup = device.createBindGroup({
@@ -461,7 +461,7 @@ const computeBindGroup = device.createBindGroup({
 });
 ```
 
-2.6 Create a command encoder and queue compute pass to GPU.  
+2.6 Create a command encoder and a compute pass.  
 📁 `paint.web.ts`
 ```ts
 function draw() {
@@ -478,7 +478,7 @@ function draw() {
 }
 ```
 
-2.7 Send information about cursor position to compute shader and schedule the compute pass.  
+2.7 Send information about cursor position to the compute shader and schedule the compute pass.  
 📁 `paint.web.ts`
 ```ts
 let lastPosition: { x: number, y: number } | null = null;
@@ -493,7 +493,7 @@ function paintAt(x: number, y: number) {
 }
 ```
 
-2.8 Add gestures handling. The initGestures method comes from utility file and implements simple gesture handling for web.
+2.8 Add gesture handling. The `initGestures` method comes from utility file and implements simple gesture handling for web.
 📁 `paint.web.ts`
 ```ts
 initGestures(
@@ -503,7 +503,7 @@ initGestures(
 );
 ```
 
-2.9 Implement changing brush configuration. The `config.sync` method is called every time when brush configuration changes - when you tap on item in the toolbar. 
+2.9 Implement changing brush configuration. The `config.sync` method is called every time the brush configuration changes - when you tap on an item in the toolbar. 
 📁 `paint.web.ts`
 ```ts
 config.sync = () => {
@@ -518,12 +518,12 @@ Checkpoint: 📁 `steps/step1.ts`
 
 ### Filling gaps
 
-Task: You can see that current brush driaving a circles instead of lines. Implement a line drawing algorithm. You can base your algorithm on [linear interpolation](https://en.wikipedia.org/wiki/Linear_interpolation). Do it in compute shader.
+Task: You can see that the current brush implementation draws a series of circles instead of lines. Implement a line drawing algorithm. You can base your algorithm on [linear interpolation](https://en.wikipedia.org/wiki/Linear_interpolation). Do it in the compute shader.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/7d9cfa2c-5ecc-4786-9e17-8a5af541504d" height="400" controls></video>
 
-3.1 Pass to the compute shader the last position of the cursor too. It require a few steps. Youn need to add a new uniform. Create a JS buffor for data, bind them with compute pipeline and send dat thada to GPU. First let's update a uniform layout. 
+3.1 Pass to the compute shader the last position of the cursor too. It require a few steps. You need to create a new uniform. Create a JS buffer to hold the data, bind it with the compute pipeline and send that data to the GPU. First let's update our uniform layout. 
 📁 `paint.web.ts`
 ```diff
 const bindGroupLayout = device.createBindGroupLayout({
@@ -542,7 +542,7 @@ const bindGroupLayout = device.createBindGroupLayout({
 📁 `paint.web.ts`
 ```diff
 -const brushPosBuffer = device.createBuffer({
--const posStartBuffer = device.createBuffer({
++const posStartBuffer = device.createBuffer({
   size: 2 * 4,
   usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
 });
@@ -570,7 +570,7 @@ const computeBindGroup = device.createBindGroup({
 });
 ```
 
-3.5 Send the last position of the cursor to GPU.  
+3.5 Send the last position of the cursor to the GPU.  
 📁 `paint.web.ts`
 ```diff
 let lastPosition: { x: number, y: number } | null = null;
@@ -631,7 +631,7 @@ Task: Implement rainbow and spray brush styles in compute shader.
 Result:  
 <video src="https://github.com/user-attachments/assets/06656fbf-e307-46b4-b4cc-a68e12af5f45" height="400" controls></video>
 
-4.1 Implement rainbow brush. Compute color based on brush position instead of using solid color from uniform.  
+4.1 Implement rainbow brush. Compute color based on brush position instead of using the solid color from the uniform.  
 📁 `paint.web.ts`
 ```ts
 fn rainbowBrash(pos: vec2<f32>, distance: f32, radius: f32) {
@@ -660,14 +660,14 @@ Checkpoint: 📁 `steps/step3.ts`
 
 ## Mobile
 
-Task: Use `steps/mobile/Example.boilerplate.ts` and `steps/mobile/paint.boilerplate.ts` files as a starting point. Add gesture handling and move render loop to UI thread. Note that `steps/mobile/paint.boilerplate.ts` is a copy of final version of `paint.web.ts` file - you'll ned to update it a bit later.
+Task: Use `steps/mobile/Example.boilerplate.ts` and `steps/mobile/paint.boilerplate.ts` files as a starting point. Add gesture handling and move render loop to the UI thread. Note that `steps/mobile/paint.boilerplate.ts` is a copy of the final version of `paint.web.ts` file - you'll ned to update it a bit later.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/6300a60f-05b1-4d78-a1d5-3f637ba5f15d" height="400" controls></video>
 
 ### Setup WebGPU for mobile.
 
-5.1 Add gestures handling.  
+5.1 Add gesture handling.  
 📁 `paint.ts`
 ```diff
 +const panGesture = Gesture.Pan();
@@ -680,7 +680,7 @@ Result:
 </View>
 ```
 
-5.2 Create context to share data between Hesture handler and WebGPU render loop on UI thread.  
+5.2 Create context to share data between Gesture Handler and WebGPU render loop on the UI thread.  
 📁 `paint.ts`
 ```ts
 export default function PaintCanva() {
@@ -693,7 +693,7 @@ const sharedContext = useSharedContext<SharedContext>({
 });
 ```
 
-5.3 Enable WebGPU for worklets on UI Thread - that functionality comes from `react-native-webgpu-worklets`. And initialize WebGPU renderer.  
+5.3 Enable WebGPU for worklets on the UI Thread - that functionality comes from `react-native-webgpu-worklets`. And initialize the WebGPU renderer.  
 📁 `paint.ts`
 ```ts
 const ref = useCanvasEffect(async () => {
@@ -744,7 +744,7 @@ function frame() {
 +runOnUI(frame)();
 ```
 
-6.3 Call context.present() - this is necessary to display the content on mobile.  
+6.3 Call `context.present()` - this is necessary to display the content on mobile.  
 📁 `paint.ts`
 ```diff
 function frame() {
@@ -756,7 +756,7 @@ function frame() {
 }
 ```
 
-6.4 Shared context contains information about the last position of the brush and gesture callback. Let's assign necessery data.  
+6.4 Shared context contains information about the last position of the brush and gesture callback. Let's assign the necessary data.  
 📁 `paint.ts`
 ```ts
 function paintAt(x: number, y: number) {
@@ -767,7 +767,7 @@ runOnUI(() => {
 })();
 ```
 
-6.5 Workletize `paintAt` and `draw` methods to allow them to be called from UI thread.  
+6.5 Workletize `paintAt` and `draw` methods to allow them to be called from the UI thread.  
 📁 `paint.ts`
 ```diff
 function draw() {
@@ -778,7 +778,7 @@ function paintAt(x: number, y: number) {
   // ..
 ```
 
-6.7 Update `paintAt` to useshared context, and replace call of `getBoundingClientRect()`.  
+6.7 Update `paintAt` to use shared context, and replace call of `getBoundingClientRect()`.  
 📁 `paint.ts`
 ```diff
 -let lastPosition: { x: number, y: number } | null = null;

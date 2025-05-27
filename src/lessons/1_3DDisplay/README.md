@@ -35,7 +35,7 @@ Interesting materials
 
 ### Cube
 
-Task: Use `steps/web/boilerplate_cube.ts` file as a starting point. Setup three.js renderer, scene, camera and light. Add a cube and a torus to the scene and animate them.
+Task: Use `steps/web/boilerplate_cube.ts` file as a starting point. Setup the Three.js renderer, scene, camera and light. Add a cube and a torus to the scene and animate them.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/7b802d09-df96-4ad6-b271-9c89af6845f9" height="400" controls></video>
@@ -83,7 +83,7 @@ pointLight.position.set(5, 5, 5);
 scene.add(pointLight);
 ```
 
-1.6 Add a metalic cube to the scene.  
+1.6 Add a metallic cube to the scene.  
 📁 `display.ts`
 ```ts
 const boxGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
@@ -114,7 +114,7 @@ function animate() {
   // ...
 ```
 
-1.9 Add rotation animation for a cube.  
+1.9 Add a rotation animation for the cube.  
 📁 `display.ts`
 ```ts
 function animate() {
@@ -124,7 +124,7 @@ function animate() {
   // ...
 ```
 
-1.10 Add rotation and position animation for a torus.  
+1.10 Add rotation and position animations for the torus.  
 📁 `display.ts`
 ```ts
 function animate() {
@@ -140,7 +140,7 @@ Checkpoint: 📁 `steps/web/display_cube.ts`
 
 ### Monkey model
 
-Task: Use `steps/web/boilerplate_monkey.ts` file as a starting point. The scene and light is already set up. You need to load a monkey model and add it to the scene. The model is in the `utils/model` folder. You can use the `BufferGeometryLoader` to load the model.
+Task: Use `steps/web/boilerplate_monkey.ts` file as a starting point. The scene and lighting is already set up. You need to load the monkey model and add it to the scene. The model is in the `utils/model` folder. You can use the `BufferGeometryLoader` to load the model.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/b2fe14de-76f0-4720-9c14-9d32cdba37cc
@@ -155,7 +155,7 @@ const loader = new THREE.BufferGeometryLoader();
 const geometry = loader.parse(MODEL);
 ```
 
-2.2 Setup model material and add it to the scene.  
+2.2 Setup the mesh's material and add the mesh to the scene.  
 📁 `display.ts`
 ```ts
 const material = new THREE.MeshStandardMaterial({ 
@@ -168,7 +168,7 @@ const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 ```
 
-2.3 Add rotation animation for a model.  
+2.3 Add a rotation animation for the model.  
 📁 `display.ts`
 ```ts
 function animate() {
@@ -182,12 +182,12 @@ Checkpoint: 📁 `steps/web/display_monkey.ts`
 
 ### Shoe model
 
-Task: Use `steps/web/boilerplate_shoe.ts` file as a starting point. The scene and light is already set up. You need to load a shoe model and add it to the scene. The model is in the `utils/shoe` folder. You can use the `GLTFLoader` to load the model.
+Task: Use `steps/web/boilerplate_shoe.ts` file as a starting point. The scene and lighting is already set up. You need to load the shoe model and add it to the scene. The model is in the `utils/shoe` folder. You can use the `GLTFLoader` to load the model.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/b5d583cc-edc1-4aa2-b50c-1c8c447c8bf2" height="400" controls></video>
 
-3.1 Load a shoe model.  
+3.1 Load the shoe model.  
 📁 `display.ts`
 ```ts
 export function init() {
@@ -206,7 +206,7 @@ export function display() {
   scene.add(model);
 ```
 
-3.3 Add rotation animation for a model.  
+3.3 Add a rotation animation for the model.  
 📁 `display.ts`
 ```ts
 function animate() {
@@ -222,12 +222,12 @@ Checkpoint: 📁 `steps/web/display_cube.ts`
 
 ### Shoe model
 
-Task: Use `steps/mobile/boilerplate.tsx` file as a starting point. You need to load a shoe model and add it to the scene. The model is in the `utils/shoe` folder. You can use the `GLTFLoader` to load the model.
+Task: Use `steps/mobile/boilerplate.tsx` file as a starting point. You need to load the shoe model and add it to the scene. The model is in the `utils/shoe` folder. You can use the `GLTFLoader` to load the model.
 
 Result:
 <video src="https://github.com/user-attachments/assets/9f4abe1b-db67-4f32-97ec-7ceb010099fc" height="400" controls></video>
 
-4.1 Load a shoe model.  
+4.1 Load the shoe model.  
 📁 `3DPreview.tsx`
 ```ts
 import { useModel } from "./WebGPUMocks";
@@ -236,7 +236,7 @@ export function Preview() {
   const model = useModel(require("./utils/shoe/shoe.gltf"))!;
   // ...
 ```
-Look at the implementation of `useModel` methos in `WebGPUMocks.tsx` file. It uses `GLTFLoader` to load the model.
+Look at the implementation of `useModel` methods in `WebGPUMocks.tsx` file. It uses `GLTFLoader` to load the model.
 
 4.2 Get ref to the canvas and context.  
 📁 `3DPreview.tsx`
