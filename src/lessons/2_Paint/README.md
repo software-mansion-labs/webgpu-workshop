@@ -1,7 +1,7 @@
 # 3D Preview
 
 <details>
-<summary>Three.js - Theoretical introduction</summary>
+<summary>WebGPU - Theoretical introduction</summary>
 
 ### Official Docs
 
