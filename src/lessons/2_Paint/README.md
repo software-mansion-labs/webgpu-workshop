@@ -26,6 +26,14 @@ WebGPU is an implementation of a standard; there are a couple of implementations
 - https://github.com/google/dawn
 - https://github.com/gfx-rs/wgpu
 
+### Diagrams
+
+Render Pipeline
+![Image](https://github.com/user-attachments/assets/176ee89a-f8eb-40f7-951f-b357163bdc05)
+
+Compute Pipeline
+![Image](https://github.com/user-attachments/assets/df1c2187-01b5-4264-a16e-f8dc661049a2)
+
 ### GPU Access
 
 - **Adapter** - Represents a physical GPU device on the system.
