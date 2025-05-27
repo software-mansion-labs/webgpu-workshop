@@ -126,7 +126,7 @@ runOnUI(() => {
   });
 
   function frame() {
-    timeUniform.write(performance.now() % 15000);
+    timeUniform.write(performance.now() * 0.0002 % 10);
     pipeline
       .withColorAttachment({
         view: context.getCurrentTexture().createView(),
