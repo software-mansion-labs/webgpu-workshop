@@ -12,7 +12,7 @@ Result:
 
 Task: Use `steps/web/boilerplate.ts` file as a starting point. Setup TypeGPU renderer and display a simple gradient in shader. Look at implementation `getWebGPUContext` method because contains necessery boilerplate code to run TypeGPU on web.
 
-1.1 Setup a vertex shader. We want to simple cover the whole screen with a gradient.  
+1.1 Setup a vertex shader. We want to simply cover the whole screen with a gradient.  
 📁 `lamp.web.ts`
 ```ts
 const fullScreenTriangle = tgpu['~unstable'].vertexFn({
@@ -27,7 +27,7 @@ const fullScreenTriangle = tgpu['~unstable'].vertexFn({
 });
 ```
 
-1.2 Setup a fragment shader. We want to simple cover the whole screen with a gradient based on x coordinate.  
+1.2 Setup a fragment shader. We want to cover the whole screen with a gradient based on the *x* coordinate.  
 📁 `lamp.web.ts`
 ```ts
 const mainFragment = tgpu['~unstable'].fragmentFn({
@@ -49,7 +49,7 @@ const pipeline = root['~unstable']
   .createPipeline();
 ```
 
-1.4 Run pipeline in render loop.  
+1.4 Run the pipeline in a render loop.  
 📁 `lamp.web.ts`
 ```ts
 function frame() {
@@ -66,7 +66,7 @@ function frame() {
 
 ### Display Perlin Noise effect
 
-Task: Display a perlin noise using fragment shader. You can use `perlin` function from utility file.
+Task: Display *perlin noise* using the fragment shader. You can use `perlin` function from utility file.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/3339b73f-7f15-411b-8b7d-6b21a400fa7f" height="400" controls></video>
@@ -85,7 +85,7 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
 });
 ```
 
-2.2 Colorize perlin noise. You can use mix method to blend color based on `n` parameter.  
+2.2 Colorize the perlin noise. You can use the `mix` method to blend color based on `n` parameter.  
 📁 `lamp.web.ts`
 ```diff
 const mainFragment = tgpu['~unstable'].fragmentFn({
@@ -104,7 +104,7 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
 });
 ```
 
-2.3 Increase contrast of perlin noise to gain more lava-like effect. Use `sharpen` function from utility file.  
+2.3 Increase contrast of perlin noise to gain a more lava-like effect. Use `sharpen` function from utility file.  
 📁 `lamp.web.ts`
 ```diff
 const mainFragment = tgpu['~unstable'].fragmentFn({
@@ -120,12 +120,12 @@ Checkpoint: 📁 `steps/step1.ts`
 
 ### Animate perlin noise
 
-Task: Add time uniform to fragment shader. Use `time` uniform to animate perlin noise.
+Task: Give the shader access to the current time via a *uniform*. Use the `time` uniform to animate perlin noise.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/5a9da699-8855-4844-85eb-59d7ce68e695" height="400" controls></video>
 
-3.1 Add `time` uniform.   
+3.1 Create `timeUniform`.   
 📁 `lamp.web.ts`
 ```diff
 + const timeUniform = root['~unstable'].createUniform(d.f32, 0);
@@ -133,7 +133,7 @@ Result:
 const mainFragment = tgpu['~unstable'].fragmentFn({
 ```
 
-3.2 Use `time` uniform in fragment shader.  
+3.2 Use `timeUniform` in the fragment shader.  
 📁 `lamp.web.ts`
 ```diff
 const mainFragment = tgpu['~unstable'].fragmentFn({
@@ -148,7 +148,7 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
 // ...
 ```
 
-3.3 Update `time` uniform in render loop.  
+3.3 Update `timeUniform` in the render loop.  
 📁 `lamp.web.ts`
 ```ts
 function frame() {
@@ -160,7 +160,7 @@ function frame() {
 
 ### TypeGPU on mobile
 
-Task: Use `steps/mobile/boilerplate.ts` file as a starting point. Add necessery modification to allow `TypeGPU` to run on mobile. And finally allow to run TypeGPU on UI thread.
+Task: Use `steps/mobile/boilerplate.ts` file as a starting point. Add necessery modification to allow `TypeGPU` to run on mobile. Finally, allow to run TypeGPU on UI thread.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/731a1dfa-b977-4cef-be93-2baf7831c333" height="400" controls></video>
