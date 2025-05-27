@@ -1,7 +1,8 @@
 import tgpu from 'typegpu';
 import * as d from 'typegpu/data';
-import { div, add, mix } from 'typegpu/std';
-import { getWebGPUContext, noise, sharpen } from './utils/utils';
+import { div, mix, mul } from 'typegpu/std';
+import { perlin3d } from '@typegpu/noise';
+import { getWebGPUContext, sharpen } from './utils/utils';
 
 export async function init() {
   const { root, context, presentationFormat, width, height } = await getWebGPUContext();
@@ -21,8 +22,8 @@ export async function init() {
     in: { pos: d.builtin.position },
     out: d.vec4f,
   })((input) => {
-    const uv = div(input.pos.xy, d.vec2f(width * 0.4, height * 0.4));
-    const n = sharpen(noise(uv));
+    const uv = div(input.pos.xy, mul(d.vec2f(width, height), 0.2));
+    const n = sharpen(perlin3d.sample(d.vec3f(uv, 0)));
     const color = mix(
       div(d.vec4f(153, 0, 105, 255), 255),
       div(d.vec4f(255, 140, 26, 255), 255),
