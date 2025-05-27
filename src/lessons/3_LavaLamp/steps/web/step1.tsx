@@ -22,9 +22,7 @@ export async function init() {
     in: { pos: d.builtin.position },
     out: d.vec4f,
   })((input) => {
-    const minDim = d.f32(min(width, height));
-    const uv = div(input.pos.xy, minDim * 0.2);
-    const n = uv.x;
+    const n = input.pos.x / width;
     return d.vec4f(n, n, n, 1);
   });
 
