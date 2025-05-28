@@ -34,8 +34,7 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
   in: { pos: d.builtin.position },
   out: d.vec4f,
 })((input) => {
-  const uv = div(input.pos.xy, d.vec2f(width, height));
-  const n = uv.x;
+  const n = input.pos.x / width;
   return d.vec4f(n, n, n, 1);
 });
 ```
@@ -66,12 +65,12 @@ function frame() {
 
 ### Display Perlin Noise effect
 
-Task: Display *perlin noise* using the fragment shader. You can use `perlin` function from utility file.
+Task: Display *perlin noise* using the fragment shader. You can use the `perlin3d` API, imported from `@typegpu/noise`.
 
 Result:  
 <video src="https://github.com/user-attachments/assets/3339b73f-7f15-411b-8b7d-6b21a400fa7f" height="400" controls></video>
 
-2.1 Use `perlin` function from utility file and display it.  
+2.1 Use `perlin3d.sample` function and display its return value.  
 📁 `lamp.web.ts`
 ```ts
 
@@ -79,8 +78,9 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
   in: { pos: d.builtin.position },
   out: d.vec4f,
 })((input) => {
-  const uv = div(input.pos.xy, d.vec2f(width * 0.4, height * 0.4));
-  const n = noise(uv);
+  const minDim = d.f32(min(width, height));
+  const uv = div(input.pos.xy, minDim * 0.2);
+  const n = perlin3d.sample(d.vec3f(uv, 0));
   return d.vec4f(n, n, n, 1);
 });
 ```
@@ -92,8 +92,9 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
   in: { pos: d.builtin.position },
   out: d.vec4f,
 })((input) => {
-  const uv = div(input.pos.xy, d.vec2f(width * 0.4, height * 0.4));
-  const n = noise(uv);
+  const minDim = d.f32(min(width, height));
+  const uv = div(input.pos.xy, minDim * 0.2);
+  const n = perlin3d.sample(d.vec3f(uv, 0));
 -  return d.vec4f(n, n, n, 1);
 +  const color = mix(
 +    div(d.vec4f(153, 0, 105, 255), 255),
@@ -109,9 +110,10 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
 ```diff
 const mainFragment = tgpu['~unstable'].fragmentFn({
 // ...
-const uv = div(input.pos.xy, d.vec2f(width * 0.4, height * 0.4));
--const n = noise(uv);
-+const n = sharpen(noise(uv));
+const minDim = d.f32(min(width, height));
+const uv = div(input.pos.xy, minDim * 0.2);
+-const n = perlin3d.sample(d.vec3f(uv, 0));
++const n = sharpen(perlin3d.sample(d.vec3f(uv, 0)));
 const color = mix(
 // ...
 ```
@@ -140,11 +142,11 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
   in: { pos: d.builtin.position },
   out: d.vec4f,
 })((input) => {
-  const uv = div(input.pos.xy, d.vec2f(width * 0.4, height * 0.4));
+  const minDim = d.f32(min(width, height));
+  const uv = div(input.pos.xy, minDim * 0.2);
+-  const n = sharpen(perlin3d.sample(d.vec3f(uv, 0)));
 +  const time = timeUniform.value;
-+  const p = add(uv, div(d.vec2f(time, time), 5000));
--  const n = sharpen(noise(uv));
-+  const n = sharpen(noise(p));
++  const n = sharpen(perlin3d.sample(d.vec3f(uv, time)));
 // ...
 ```
 
@@ -152,7 +154,7 @@ const mainFragment = tgpu['~unstable'].fragmentFn({
 📁 `lamp.web.ts`
 ```ts
 function frame() {
-  timeUniform.write(performance.now() % 15000);
+  timeUniform.write(performance.now() * 0.0002 % 10);
   // ...
 ```
 
@@ -219,8 +221,9 @@ Result:
 runOnUI(() => {
   'worklet';
 +  const tgpu = requireUI('typegpu').default;
-+  const { abs, add, div, mix, pow, sign } = requireUI('typegpu/std');
++  const { abs, div, min, mix, pow, sign } = requireUI('typegpu/std');
 +  const d = requireUI('typegpu/data');
++  const { perlin3d } = requireUI('typegpu/noise');
 // ...
 ```
 
