@@ -193,7 +193,7 @@ Result:
 export function init() {
   // ...
   const loader = new GLTFLoader();
-  loader.load("assets/shoe/shoe.gltf", (model) => {
+  loader.load("./shoe.gltf", (model) => {
     display(model.scene, canvas, width, height);
   });
 ```
