@@ -37,10 +37,11 @@
     "react-native-screens": "~4.10.0",
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
-    "react-native-webgpu-worklets": "^0.2.5",
+    "react-native-webgpu-worklets": "^0.2.6",
     "react-native-wgpu": "^0.1.23",
     "three": "^0.176.0",
-    "typegpu": "^0.5.7"
+    "typegpu": "^0.5.8",
+    "@typegpu/noise": "^0.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -49,7 +50,7 @@
     "@types/three": "^0.176.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
-    "unplugin-typegpu": "^0.1.1"
+    "unplugin-typegpu": "^0.1.2"
   },
   "private": true
 }
