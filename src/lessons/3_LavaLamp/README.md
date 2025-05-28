@@ -3,7 +3,7 @@
 Task: Create a lava lamp effect using the `TypeGPU` library.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/2c78f770-8be0-45bc-bbe1-d9e2e62ac0c2" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/08a0abfc-a218-4303-bd50-d92ebbbef950" height="400" controls></video>
 
 ## Web
 
@@ -125,7 +125,7 @@ Checkpoint: 📁 `steps/step1.ts`
 Task: Give the shader access to the current time via a *uniform*. Use the `time` uniform to animate perlin noise.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/5a9da699-8855-4844-85eb-59d7ce68e695" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/24c84774-7d59-4a91-bd4d-6e2f3d69d20f" height="400" controls></video>
 
 3.1 Create `timeUniform`.   
 📁 `lamp.web.ts`
@@ -165,7 +165,7 @@ function frame() {
 Task: Use `steps/mobile/boilerplate.ts` file as a starting point. Add necessery modification to allow `TypeGPU` to run on mobile. Finally, allow to run TypeGPU on UI thread.
 
 Result:  
-<video src="https://github.com/user-attachments/assets/731a1dfa-b977-4cef-be93-2baf7831c333" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/0d23f9d5-894e-4022-827e-d2db6b3e46b4" height="400" controls></video>
 
 4.1 Replace web specific code with mobile specific code.  
 📁 `lamp.ts`
@@ -195,7 +195,7 @@ Checkpoint: 📁 `steps/step1.ts`
 ### Run TypeGPU on UI thread
 
 Result:  
-<video src="https://github.com/user-attachments/assets/b4a28340-46f3-43c7-8f9a-ce0b50a87f04" height="400" controls></video>
+<video src="https://github.com/user-attachments/assets/8ec5cd5f-f9db-488b-8e55-c61e5cae73aa" height="400" controls></video>
 
 5.1 Wrap code in `runOnUI`.  
 📁 `lamp.ts`
