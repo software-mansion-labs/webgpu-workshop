@@ -193,7 +193,7 @@ Result:
 export function init() {
   // ...
   const loader = new GLTFLoader();
-  loader.load("assets/shoe/shoe.gltf", (model) => {
+  loader.load("./shoe.gltf", (model) => {
     display(model.scene, canvas, width, height);
   });
 ```
@@ -308,7 +308,7 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 // ...
 const panGesture = Gesture.Pan();
 // ...
-<GestureDetector onGestureEvent={panGesture}>
+<GestureDetector gesture={panGesture}>
   <Canvas
     // ...
   />
